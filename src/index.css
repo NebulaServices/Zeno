@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper i {
+  top: 20px;
+  right: 20px;
+  position: absolute;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #18181B;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D4D4D8;
+  border-radius: 20px;
+  border: 2px solid #18181B;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #E4E4E7;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background-color: #27272A;
+  border: 2px solid #E4E4E7;
+}
