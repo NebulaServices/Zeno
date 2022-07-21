@@ -141,9 +141,9 @@ window.openUrl = (value) => {
         iframe.style.height = "100%";
         iframe.style.border = "none";
         win.document.body.appendChild(iframe);
+        document.getElementById("loading").classList.add("hidden");
+        document.getElementById("search").value = "";
       }
-      document.getElementById("loading").classList.add("hidden");
-      document.getElementById("search").value = "";
     }).catch((e) => {
       document.getElementById("loading").classList.add("hidden");
       document.getElementById("error").classList.remove("hidden");

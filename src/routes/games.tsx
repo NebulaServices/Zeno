@@ -3,8 +3,6 @@ import { For, Show } from "solid-js";
 import { games, categories } from "~/games.json";
 import GameCard from "~/components/GameCard";
 
-console.log(games, categories);
-
 export default function Games () {
   return (
     <div class="w-full h-[calc(100%-64px)]">
