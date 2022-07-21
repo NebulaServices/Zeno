@@ -1,6 +1,7 @@
 import { lazy } from "solid-js";
 
 export default function GameCard (props) {
+  console.log(props);
   return (
     <a class="flex justify-center" href={props.url}>
       <div class="bg-zinc-800 light:bg-zinc-300 rounded-lg p-5 w-full shadow-lg hover:shadow-2xl cursor-pointer">
