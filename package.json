@@ -1,5 +1,7 @@
 {
-  "name": "Zeno",
+  "name": "zeno",
+  "description": "A proxy front-end submission for TN's proxathon.",
+  "version": "0.0.1",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
