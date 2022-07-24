@@ -47,7 +47,21 @@ export default function Home() {
           </div>
         </div>
         <div id="loading" class="flex my-2 hidden">
-          Loading<img class="h-6 px-1" src={loading} alt="Loading..." />
+          Loading
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 px-1 fill-zinc-100 light:fill-zinc-900" style="margin: auto; background: none; display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <rect x="15" y="30" width="10" height="40">
+              <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-0.6"></animate>
+            </rect>
+            <rect x="35" y="30" width="10" height="40">
+              <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-0.4"></animate>
+            </rect>
+            <rect x="55" y="30" width="10" height="40">
+              <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-0.2"></animate>
+            </rect>
+            <rect x="75" y="30" width="10" height="40">
+              <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-1"></animate>
+            </rect>
+          </svg>
         </div>
         <div id="error" class="flex my-2 hidden justify-center w-11/12 sm:w-5/6 md:w-2/5 lg:w-1/3"></div>
       </div>

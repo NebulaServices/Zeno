@@ -73,7 +73,6 @@ function parseValue (value) {
 const defaultSettings = {
   searchEngine: "google",
   proxy: "uv",
-  adBlock: "disabled",
   theme: "dark",
   display: "default",
   tabCloak: "none",

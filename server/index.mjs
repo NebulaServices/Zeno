@@ -13,12 +13,6 @@ const blacklist = [
   "www.netflix.com"
 ];
 
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-  'Access-Control-Max-Age': 2592000,
-};
-
 fs.readFile("dist/index.html", function (err, html) {
   if (err) {
     throw err; 
@@ -29,7 +23,7 @@ fs.readFile("dist/index.html", function (err, html) {
     }
     for (let i in blacklist) {
       if (req.headers["x-bare-host"] === blacklist[i]) {
-        res.writeHead(500, headers);
+        res.writeHead(500);
         return res.end();
       }
     }
@@ -38,7 +32,7 @@ fs.readFile("dist/index.html", function (err, html) {
     } else {
       if (req.url.includes(".")) staticServer.serve(req, res);
       else {
-        res.writeHeader(200, Object.assign({"Content-Type": "text/html"}, headers));
+        res.writeHeader(200, {"Content-Type": "text/html"});
         res.write(html);
         res.end();
       }
@@ -57,10 +51,3 @@ httpServer.on("upgrade", (req, socket, head) => {
 httpServer.listen({
   port: 3001
 });
-
-function handleAPI (req, res) {
-  res.writeHead(200, Object.assign({"Content-Type": "application/json"}, headers));
-  res.end(JSON.stringify({
-    message: "Hello World"
-  }));
-}
