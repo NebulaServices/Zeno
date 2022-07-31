@@ -1,5 +1,3 @@
-import loading from "../loading.svg";
-
 import { onMount } from "solid-js";
 
 declare global {
