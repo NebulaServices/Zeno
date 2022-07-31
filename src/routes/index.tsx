@@ -1,18 +1,18 @@
 // import { onMount } from "solid-js";
 
-// declare global {
-//   interface Window {
-//     inputActive: boolean;
-//     suggestions: string[];
-//     proxies: { [key: string]: any };
-//     updateSuggestions: () => void;
-//     getSettings: () => any;
-//     setSettings: (settings: any) => void;
-//     openUrl: (url: string) => void;
-//   }
-// }
+declare global {
+  interface Window {
+    inputActive: boolean;
+    suggestions: string[];
+    proxies: { [key: string]: any };
+    updateSuggestions: () => void;
+    getSettings: () => any;
+    setSettings: (settings: any) => void;
+    openUrl: (url: string) => void;
+  }
+}
 
-// declare var __uv$config: any;
+declare var __uv$config: any;
 
 export default function Home() {
   // onMount(async () => {
