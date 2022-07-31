@@ -14,8 +14,6 @@ declare global {
 
 declare var __uv$config: any;
 
-//function onMount(t: any) {}
-
 export default function Home() {
   onMount(async () => {
     let search: HTMLInputElement = document.getElementById("search") as HTMLInputElement;
