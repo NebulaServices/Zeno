@@ -48,7 +48,7 @@ const searchEngines = {
 }
 
 // Proxies
-const proxies = {
+window.proxies = {
   uv: {
     sw: "/uv.sw.js",
     scope: __uv$config.prefix,

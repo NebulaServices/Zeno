@@ -1,3 +1,8 @@
 {
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "files.autoSave": "off",
+  "editor.fontSize": 16,
+  "editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', monospace",
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false
 }

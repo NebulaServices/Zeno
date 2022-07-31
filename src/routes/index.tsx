@@ -6,6 +6,7 @@ declare global {
   interface Window {
     inputActive: boolean;
     suggestions: string[];
+    proxies: { [key: string]: any };
     updateSuggestions: () => void;
     getSettings: () => any;
     setSettings: (settings: any) => void;
