@@ -1,4 +1,4 @@
-// import { onMount } from "solid-js";
+import { onMount } from "solid-js";
 
 declare global {
   interface Window {
@@ -14,7 +14,7 @@ declare global {
 
 declare var __uv$config: any;
 
-function onMount(t: any) {}
+//function onMount(t: any) {}
 
 export default function Home() {
   onMount(async () => {
