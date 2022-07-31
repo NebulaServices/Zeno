@@ -14,24 +14,26 @@ declare global {
 
 declare var __uv$config: any;
 
+function onMount(t: any) {}
+
 export default function Home() {
-  // onMount(async () => {
-  //   let search: HTMLInputElement = document.getElementById("search") as HTMLInputElement;
+  onMount(async () => {
+    let search: HTMLInputElement = document.getElementById("search") as HTMLInputElement;
     
-  //   search.addEventListener("focus", () => {
-  //     window.inputActive = true;
-  //     if (window.suggestions[0]) document.getElementById("suggestion-container")?.classList?.remove("hidden");
-  //   });
-  //   search.addEventListener("focusout", () => {
-  //     window.inputActive = false;
-  //     document.getElementById("suggestion-container")?.classList?.add("hidden");
-  //   });
-  //   search.addEventListener("keydown", (e) => {
-  //     if (e.key === "Enter") {
-  //       window.openUrl(search.value);
-  //     }
-  //   });
-  // });
+    search.addEventListener("focus", () => {
+      window.inputActive = true;
+      if (window.suggestions[0]) document.getElementById("suggestion-container")?.classList?.remove("hidden");
+    });
+    search.addEventListener("focusout", () => {
+      window.inputActive = false;
+      document.getElementById("suggestion-container")?.classList?.add("hidden");
+    });
+    search.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        window.openUrl(search.value);
+      }
+    });
+  });
 
   return (
     <>
