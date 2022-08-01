@@ -30,7 +30,6 @@ export default function Home() {
       if (e.key === "Enter") {
         let settings = window.getSettings();
         window.proxies[settings.proxy].navigate(search.value);
-        //window.openUrl(search.value);
       }
     });
   });

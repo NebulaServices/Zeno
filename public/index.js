@@ -70,7 +70,7 @@ window.proxies = {
           document.getElementById("error").innerText = `Error: ${e.message}`;
         });
       } else {
-        document.getElementById("error").classList.remove("hidden");
+        alert("Service workers are not supported in this browser.");
       }
     },
     register () {
@@ -267,7 +267,6 @@ function createSuggestion (suggestion) {
   elm.children[0].addEventListener("mousedown", () => {
     let settings = getSettings();
     window.proxies[settings.proxy].navigate(suggestion);
-    // openUrl(suggestion);
   });
   return elm.children[0];
 }
