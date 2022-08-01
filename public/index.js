@@ -50,19 +50,70 @@ const searchEngines = {
 // Proxies
 window.proxies = {
   uv: {
-    sw: "/uv.sw.js",
+    sw: "/~uv/sw.js",
     scope: __uv$config.prefix,
-    generateUrl (value) {
-      let url = parseValue(value);
-      return __uv$config.prefix + __uv$config.encodeUrl(url);
+    generateUrl (string) {
+      let settings = getSettings();
+      return proxies.uv.scope + __uv$config.encodeUrl(parseValue(settings.shortcuts && settings.shortcuts[string.trim()] ? settings.shortcuts[string.trim()] : string));
+    },
+    navigate (value) {
+      if ("serviceWorker" in navigator) {
+        document.getElementById("loading").classList.remove("hidden");
+        navigator.serviceWorker.register(proxies.uv.sw, {
+          scope: proxies.uv.scope,
+          updateViaCache: "none"
+        }).then(() => {
+          openUrl(proxies.uv.generateUrl(value));
+        }).catch((e) => {
+          document.getElementById("loading").classList.add("hidden");
+          document.getElementById("error").classList.remove("hidden");
+          document.getElementById("error").innerText = `Error: ${e.message}`;
+        });
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    },
+    register () {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register(proxies.uv.sw, {
+          scope: proxies.uv.scope,
+          updateViaCache: "none"
+        }).catch(alert);
+      } else {
+        alert("Service workers are not supported in this browser.");
+      }
     }
   },
-  osana: {
-    sw: "/osana.sw.js",
-    scope: __config.prefix,
-    generateUrl (value) {
-      let url = parseValue(value);
-      return __config.prefix + __config.codec.encode(url);
+  stomp: {
+    sw: `/~stomp/worker.js?config=${JSON.stringify({codec:1,bare_server:"/bare/",directory:"/~stomp/"})}`,
+    scope: "/~stomp/",
+    generateUrl (string) {
+      let settings = getSettings();
+      return `${proxies.stomp.scope}process:html:${encodeURIComponent(parseValue(settings.shortcuts && settings.shortcuts[string.trim()] ? settings.shortcuts[string.trim()] : string))}`;
+    },
+    async navigate (value) {
+      if ("serviceWorker" in navigator) {
+        const sw = await navigator.serviceWorker.register(proxies.stomp.sw, {
+          scope: proxies.stomp.scope,
+          updateViaCache: "none"
+        }).catch(alert);
+        sw.update().then(() => {
+          openUrl(proxies.stomp.generateUrl(value));
+        });
+      } else {
+        alert("Service workers are not supported in this browser.");
+      }
+    },
+    async register () {
+      if ("serviceWorker" in navigator) {
+        const sw = await navigator.serviceWorker.register(proxies.stomp.sw, {
+          scope: proxies.stomp.scope,
+          updateViaCache: "none"
+        }).catch(alert);
+        sw.update();
+      } else {
+        alert("Service workers are not supported in this browser.");
+      }
     }
   }
 }
@@ -74,6 +125,41 @@ function parseValue (value) {
     return location.protocol + "//" + value.trim();
   } else {
     return searchEngines[getSettings().searchEngine].generateSearchUrl(value)
+  }
+}
+
+// Search Navigation
+window.openUrl = (url) => {
+  if (settings.tabCloak === "none") {
+    if (settings.display === "default") {
+      location.href = url;
+    } else {
+      window.open(url, "_blank", "left=0,top=0");
+      document.getElementById("loading").classList.add("hidden");
+      document.getElementById("search").value = "";
+    }
+  } else {
+    let win;
+    if (settings.display === "default") {
+      win = window.open("about:blank", "_blank");
+    } else {
+      win = window.open("about:blank", "_blank", "left=0,top=0");
+    }
+    let style = win.document.createElement("style");
+    style.innerHTML = `
+      body {
+        margin: 0;
+      }
+    `;
+    win.document.head.appendChild(style);
+    let iframe = win.document.createElement("iframe");
+    iframe.src = location.origin + url;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    win.document.body.appendChild(iframe);
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("search").value = "";
   }
 }
 
@@ -108,58 +194,7 @@ window.setSettings = (settings) => {
 let settings = getSettings();
 if (settings.theme === "light") document.documentElement.classList.add("light");
 
-// Search Navigation
-window.openUrl = (value) => {
-  if (!value.trim()) return;
-  let settings = getSettings();
-  if ("serviceWorker" in navigator) {
-    document.getElementById("loading").classList.remove("hidden");
-    navigator.serviceWorker.register(proxies[settings.proxy].sw, {
-      scope: proxies[settings.proxy].scope,
-    }).then(() => {
-      let url = "";
-      if (settings.shortcuts && settings.shortcuts[value.trim()]) url = proxies[settings.proxy].generateUrl(settings.shortcuts[value.trim()]);
-      else url = proxies[settings.proxy].generateUrl(value.trim());
-      if (settings.tabCloak === "none") {
-        if (settings.display === "default") {
-          location.href = url;
-        } else {
-          window.open(url, "_blank", "left=0,top=0");
-          document.getElementById("loading").classList.add("hidden");
-          document.getElementById("search").value = "";
-        }
-      } else {
-        let win;
-        if (settings.display === "default") {
-          win = window.open("about:blank", "_blank");
-        } else {
-          win = window.open("about:blank", "_blank", "left=0,top=0");
-        }
-        let style = win.document.createElement("style");
-        style.innerHTML = `
-          body {
-            margin: 0;
-          }
-        `;
-        win.document.head.appendChild(style);
-        let iframe = win.document.createElement("iframe");
-        iframe.src = location.origin + url;
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.border = "none";
-        win.document.body.appendChild(iframe);
-        document.getElementById("loading").classList.add("hidden");
-        document.getElementById("search").value = "";
-      }
-    }).catch((e) => {
-      document.getElementById("loading").classList.add("hidden");
-      document.getElementById("error").classList.remove("hidden");
-      document.getElementById("error").innerText = `Error: ${e.message}`;
-    });
-  } else {
-    document.getElementById("error").classList.remove("hidden");
-  }
-}
+proxies[settings.proxy].register();
 
 // Search Suggestions
 window.inputActive = window.inputActive || false;
@@ -230,7 +265,9 @@ function createSuggestion (suggestion) {
     </div>
   `;
   elm.children[0].addEventListener("mousedown", () => {
-    openUrl(suggestion);
+    let settings = getSettings();
+    window.proxies[settings.proxy].navigate(suggestion);
+    // openUrl(suggestion);
   });
   return elm.children[0];
 }

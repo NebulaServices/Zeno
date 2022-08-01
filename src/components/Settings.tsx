@@ -78,6 +78,7 @@ export default function Settings () {
         break;
       case "proxy":
         settings.proxy = event.target.value;
+        window.proxies[settings.proxy].register();
         break;  
       case "theme":
         settings.theme = event.target.value;
@@ -101,7 +102,7 @@ export default function Settings () {
   }
 
   return (
-    <div id="settings" class="top-0 fixed w-full h-full bg-black bg-opacity-50 hidden" onclick={hideSettings}>
+    <div id="settings" class="top-0 fixed w-full h-full bg-black bg-opacity-50 hidden z-50" onclick={hideSettings}>
       <div class="fixed right-0 top-0 w-full sm:w-3/4 md:w-1/2 lg:w-1/3 h-full bg-zinc-900 light:bg-zinc-200 z-20 overflow-auto">
         <div class="flex">
         <i class="fa-light fa-arrow-left m-4 p-1 text-lg" id="settings-close" onclick={hideSettings}></i>
@@ -131,6 +132,7 @@ export default function Settings () {
               <i class="fa-light fa-angle-down"></i>
               <select id="proxy" class="py-4 px-3 bg-transparent w-full focus:outline-none text-base appearance-none" onchange={updateSettings}>
                 <option class="bg-zinc-800 light:bg-zinc-300" value="uv">Ultraviolet</option>
+                <option class="bg-zinc-800 light:bg-zinc-300" value="stomp">Stomp</option>
               </select>
             </div>
           </div>

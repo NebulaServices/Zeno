@@ -28,7 +28,9 @@ export default function Home() {
     });
     search.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        window.openUrl(search.value);
+        let settings = window.getSettings();
+        window.proxies[settings.proxy].navigate(search.value);
+        //window.openUrl(search.value);
       }
     });
   });
