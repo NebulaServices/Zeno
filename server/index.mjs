@@ -1,46 +1,43 @@
 import BareServer from "@tomphttp/bare-server-node";
-import { createServer as HTTPServer } from "http";
-import { Server as StaticServer } from "node-static";
-import fs from "fs";
+import express from "express";
+import { createServer } from "node:http";
+import path from "node:path";
 
-const httpServer = HTTPServer();
-const staticServer = new StaticServer("dist");
-const bareServer = BareServer("/bare/");
-
+const config = {
+  port: process.env.PORT || 3001,
+  bare: "/bare/"
+}
+const __dirname = path.resolve();
+const app = express();
+const server = createServer(app);
+const bareServer = BareServer(config.bare);
 const blacklist = [
   "accounts.google.com",
   "netflix.com",
   "www.netflix.com"
 ];
 
-fs.readFile("dist/index.html", function (err, html) {
-  if (err) {
-    throw err; 
-  }
-  httpServer.on("request", (req, res) => {
-    if (/^\/api/.test(req.url)) {
-      return handleAPI(req, res);
-    }
+app.use((req, res, next) => {
+  if (bareServer.shouldRoute(req)) {
     for (let i in blacklist) {
       if (req.headers["x-bare-host"] === blacklist[i]) {
-        res.writeHead(500);
-        return res.end();
+        return res.send();
       }
     }
-    if (bareServer.shouldRoute(req)) {
-      bareServer.routeRequest(req, res);
-    } else {
-      if (req.url.includes(".")) staticServer.serve(req, res);
-      else {
-        res.writeHeader(200, {"Content-Type": "text/html"});
-        res.write(html);
-        res.end();
-      }
-    }
-  });
+    bareServer.routeRequest(req, res);
+  } else {
+    next();
+  }
 });
 
-httpServer.on("upgrade", (req, socket, head) => {
+app.use(express.static("dist"));
+app.use(express.static("public"));
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "dist/index.html"));
+});
+
+server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head);
   } else {
@@ -48,6 +45,8 @@ httpServer.on("upgrade", (req, socket, head) => {
   }
 });
 
-httpServer.listen({
-  port: 3001
+server.listen({
+  port: config.port
 });
+
+console.log(`Server listening on port ${config.port}`);

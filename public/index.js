@@ -56,6 +56,14 @@ window.proxies = {
       let url = parseValue(value);
       return __uv$config.prefix + __uv$config.encodeUrl(url);
     }
+  },
+  osana: {
+    sw: "/osana.sw.js",
+    scope: __config.prefix,
+    generateUrl (value) {
+      let url = parseValue(value);
+      return __config.prefix + __config.codec.encode(url);
+    }
   }
 }
 
