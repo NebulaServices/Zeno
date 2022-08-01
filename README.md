@@ -2,9 +2,9 @@
 
 # Cloning
 ```bash
-$ git clone https://github.com/cohenerickson/Zeno.git
-$ cd Zeno
-$ npm ci
+git clone https://github.com/cohenerickson/Zeno.git
+cd Zeno
+npm ci
 ```
 
 ## Running Production Server
