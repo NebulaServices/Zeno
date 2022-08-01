@@ -8,13 +8,12 @@ $ npm ci
 ```
 
 ## Running Production Server
-localhost:3001
 ```bash
-$ npm start
+npm run build
+npm start
 ```
 
 ## Running Development Server (No Bare)
-localhost:3000
 ```bash
-$ npm run dev
+npm run dev
 ```
