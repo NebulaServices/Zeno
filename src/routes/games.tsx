@@ -5,7 +5,7 @@ import GameCard from "~/components/GameCard";
 
 export default function Games () {
   return (
-    <div class="w-full h-[calc(100%-64px)]">
+    <div class="w-full h-[calc(100%-64px-30px)]">
       <div class="flex flex-col justify-center items-center h-1/2">
         <h1 class="text-4xl">Games</h1>
         
@@ -24,8 +24,6 @@ export default function Games () {
           </div>
         </div>
       }</For>
-      
-    
     </div>
   )
 }

@@ -133,6 +133,8 @@ export default function Settings () {
               <select id="proxy" class="py-4 px-3 bg-transparent w-full focus:outline-none text-base appearance-none" onchange={updateSettings}>
                 <option class="bg-zinc-800 light:bg-zinc-300" value="uv">Ultraviolet</option>
                 <option class="bg-zinc-800 light:bg-zinc-300" value="stomp">Stomp</option>
+                <option class="bg-zinc-800 light:bg-zinc-300" value="osana">Osana</option>
+                <option class="bg-zinc-800 light:bg-zinc-300" value="dip" disabled>DIP</option>
               </select>
             </div>
           </div>
