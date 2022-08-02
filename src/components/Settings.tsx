@@ -134,6 +134,7 @@ export default function Settings () {
                 <option class="bg-zinc-800 light:bg-zinc-300" value="uv">Ultraviolet</option>
                 <option class="bg-zinc-800 light:bg-zinc-300" value="stomp">Stomp</option>
                 <option class="bg-zinc-800 light:bg-zinc-300" value="osana">Osana</option>
+                <option class="bg-zinc-800 light:bg-zinc-300" value="aero">Aero</option>
                 <option class="bg-zinc-800 light:bg-zinc-300" value="dip" disabled>DIP</option>
               </select>
             </div>
