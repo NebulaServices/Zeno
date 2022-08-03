@@ -151,55 +151,6 @@ window.proxies = {
       }
     }
   },
-  dip: {
-    sw: "/dip~sw.js",
-    scope: "/~dip/",
-    generateUrl (string) {
-      const base64 = {
-        encode(str) {
-          if (!str) return str;
-          var encoded = btoa(encodeURIComponent(str));
-          if (!encoded.endsWith('/')) return encoded+'/';
-          else return encoded
-        },
-        decode(str) {
-          if (!str) return str;
-          str = str.replace(new RegExp('\/$', 'gi'), '');
-          var encoded = decodeURIComponent(atob(str));
-          return encoded;
-        }
-      }
-      let settings = getSettings();
-      return proxies.dip.scope + base64.encode(parseValue(settings.shortcuts && settings.shortcuts[string.trim()] ? settings.shortcuts[string.trim()] : string));
-    },
-    navigate (value) {
-      if ("serviceWorker" in navigator) {
-        document.getElementById("loading").classList.remove("hidden");
-        navigator.serviceWorker.register(proxies.dip.sw, {
-          scope: proxies.dip.scope,
-          updateViaCache: "none"
-        }).then(() => {
-          openUrl(proxies.dip.generateUrl(value));
-        }).catch((e) => {
-          document.getElementById("loading").classList.add("hidden");
-          document.getElementById("error").classList.remove("hidden");
-          document.getElementById("error").innerText = `Error: ${e.message}`;
-        });
-      } else {
-        alert("Service workers are not supported in this browser.");
-      }
-    },
-    register () {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register(proxies.dip.sw, {
-          scope: proxies.dip.scope,
-          updateViaCache: "none"
-        }).catch(alert);
-      } else {
-        alert("Service workers are not supported in this browser.");
-      }
-    }
-  },
   aero: {
     sw: "/aero~sw.js",
     scope: "/~aero/",
