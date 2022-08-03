@@ -11,6 +11,7 @@ const __dirname = path.resolve();
 const app = express();
 const server = createServer(app);
 const bareServer = BareServer(config.bare);
+
 const blacklist = [
   "accounts.google.com",
   "netflix.com",
@@ -19,11 +20,7 @@ const blacklist = [
 
 app.use((req, res, next) => {
   if (bareServer.shouldRoute(req)) {
-    for (let i in blacklist) {
-      if (req.headers["x-bare-host"] === blacklist[i]) {
-        return res.send();
-      }
-    }
+    for (let i in blacklist) if (req.headers["x-bare-host"] === blacklist[i]) return res.send();
     bareServer.routeRequest(req, res);
   } else {
     next();
