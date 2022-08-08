@@ -19,12 +19,10 @@ const blacklist = [
 ];
 
 app.use((req, res, next) => {
-  console.log(req.url);
   if (bareServer.shouldRoute(req)) {
     for (let i in blacklist) if (req.headers["x-bare-host"] === blacklist[i]) return res.send();
     bareServer.routeRequest(req, res);
   } else {
-    console.log(req.url);
     next();
   }
 });

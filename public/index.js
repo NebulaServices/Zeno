@@ -155,16 +155,25 @@ window.proxies = {
     sw: "/dip~sw.js",
     scope: "/~dip/",
     generateUrl (string) {
-      const base64 = {
-        encode(str) {
-          if (!str) return str;var encoded = btoa(encodeURIComponent(str));if (!encoded.endsWith('/')) return encoded+'/';else return encoded
+      const xor = {
+        key: 2,
+        encode(str, key) {
+          if (!key) key = xor.key;
+          if (!str) return str;
+          var encoded = encodeURIComponent((str).split('').map((char,ind)=>ind%key?String.fromCharCode(char.charCodeAt()^key):char).join(''));
+          if (!encoded.endsWith('/')) return encoded+'/';
+          else return encoded
         },
-        decode(str) {
-          if (!str) return str;str = str.replace(new RegExp('\/$', 'gi'), '');var encoded = decodeURIComponent(atob(str));return encoded;
+        decode(str, key) {
+          if (!key) key = xor.key;
+          if (!str) return str;
+          str = str.replace(new RegExp('\/$', 'g'), '');
+          var encoded = (decodeURIComponent(str).split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join(''));
+          return encoded;
         }
       }
       let settings = getSettings();
-      return proxies.dip.scope + base64.encode(parseValue(settings.shortcuts && settings.shortcuts[string.trim()] ? settings.shortcuts[string.trim()] : string));
+      return proxies.dip.scope + xor.encode(parseValue(settings.shortcuts && settings.shortcuts[string.trim()] ? settings.shortcuts[string.trim()] : string));
     },
     navigate (value) {
       if ("serviceWorker" in navigator) {

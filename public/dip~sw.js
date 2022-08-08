@@ -1,9 +1,7 @@
-importScripts('/dip/dip.worker.js');
-importScripts('/dip/dip.config.js');
-var DIP = new DIPServiceWorker('/dip/dip.config.js');
+importScripts('./dip/dip.worker.js');
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.url.startsWith(location.origin + self.__DIP.config.prefix)) return event.respondWith(
-    DIP.fetch(event)
-  );
+const sw = new DIPServiceWorker('/dip/dip.worker.js');
+
+self.addEventListener('fetch', event => {
+  event.respondWith(sw.fetch(event));
 });

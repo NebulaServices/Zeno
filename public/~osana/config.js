@@ -1,1 +1,2 @@
-(()=>{"use strict";Error,self.__osana$config={bare:`${location.origin}/bare/`,prefix:"/~osana/",codec:{encode:o=>o,decode:o=>o},files:{config:"/~osana/config.js",client:"/~osana/client.js"}},self.__osana$config})();
+(()=>{"use strict";self.__osana$config={bare:`${location.origin}/bare/`,prefix:"/~osana/",codec:{encode:(o="")=>o,decode:(o="")=>o},files:{config:"/~osana/config.js",client:"/~osana/client.js",sw:"/~osana/sw.js"},blacklist:[/^(www\.)?netflix\.com/,/^accounts\.google\.com/]},self.__osana$config})();
+//# sourceMappingURL=config.js.map
