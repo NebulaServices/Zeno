@@ -117,7 +117,7 @@ window.proxies = {
     }
   },
   osana: {
-    sw: "/~osana/sw.js",
+    sw: "/osana~sw.js",
     scope: __osana$config.prefix,
     generateUrl (string) {
       let settings = getSettings();
@@ -127,8 +127,7 @@ window.proxies = {
       if ("serviceWorker" in navigator) {
         document.getElementById("loading").classList.remove("hidden");
         navigator.serviceWorker.register(proxies.osana.sw, {
-          scope: proxies.osana.scope,
-          updateViaCache: "none"
+          scope: proxies.osana.scope
         }).then(() => {
           openUrl(proxies.osana.generateUrl(value));
         }).catch((e) => {
@@ -143,8 +142,7 @@ window.proxies = {
     register () {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register(proxies.osana.sw, {
-          scope: proxies.osana.scope,
-          updateViaCache: "none"
+          scope: proxies.osana.scope
         }).catch(alert);
       } else {
         alert("Service workers are not supported in this browser.");
@@ -276,6 +274,10 @@ window.openUrl = (url) => {
       }
     `;
     win.document.head.appendChild(style);
+    let arc = win.document.createElement("script");
+    arc.src = "https://arc.io/widget.min.js#vE8nfkNT";
+    arc.async = true;
+    win.document.head.appendChild(arc);
     let iframe = win.document.createElement("iframe");
     iframe.src = location.origin + url;
     iframe.style.width = "100%";
